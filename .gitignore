@@ -20,3 +20,4 @@ __pycache__/
 # Ignore any local data files you might have
 *.csv
 *.parquet
+preprocessing/
