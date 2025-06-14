@@ -5,3 +5,7 @@ plotly==6.1.2
 scikit_learn==1.7.0
 seaborn==0.13.2
 streamlit==1.45.1
+boto3
+s3fs
+pyarrow
+fsspec

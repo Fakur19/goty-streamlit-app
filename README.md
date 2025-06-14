@@ -4,7 +4,7 @@ An interactive Streamlit dashboard for analyzing player sentiment and key discus
 
 ---
 
-### ✨ [Link to the Live Application](https://your-app-url.streamlit.app/) 
+### ✨ [Link to the Live Application](https://goty-sentiment-analysis.streamlit.app/) 
 
 ---
 
@@ -16,13 +16,13 @@ An interactive Streamlit dashboard for analyzing player sentiment and key discus
 
 ### Screenshot
 ![App Screenshot](img/ss.png) 
-*(Optional: Add a screenshot of your app to make the README more engaging)*
+
 
 ### How to Run Locally
 1.  Clone the repository:
     ```bash
-    git clone [https://github.com/your-username/your-repo.git](https://github.com/your-username/your-repo.git)
-    cd your-repo
+    git clone https://github.com/Fakur19/goty-streamlit-app
+    cd goty-streamlit-app
     ```
 2.  Install the required packages:
     ```bash
