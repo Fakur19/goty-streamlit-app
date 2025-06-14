@@ -1,0 +1,22 @@
+# --- Secrets ---
+# Ignore the Streamlit secrets file
+.streamlit/secrets.toml
+
+# --- Python ---
+# Ignore virtual environment folders
+venv/
+env/
+.venv/
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+
+# --- OS-specific ---
+# macOS
+.DS_Store
+
+# --- Data Files ---
+# Ignore any local data files you might have
+*.csv
+*.parquet
