@@ -23,13 +23,15 @@ def load_data_from_s3():
 
         s3_path = f"s3://{bucket_name}/{file_name}"
 
-        df = pd.read_parquet(
-            s3_path,
-            storage_options={
-                "key": st.secrets["aws"]["aws_access_key_id"],
-                "secret": st.secrets["aws"]["aws_secret_access_key"],
-            },
-        )
+        # df = pd.read_parquet(
+        #     s3_path,
+        #     storage_options={
+        #         "key": st.secrets["aws"]["aws_access_key_id"],
+        #         "secret": st.secrets["aws"]["aws_secret_access_key"],
+        #     },
+        # )
+
+        df = pd.read_parquet("data/reviews_processed.parquet")
 
         # The data is already clean, but we still need to ensure dtypes are correct for plotting
         df["timestamp_created"] = pd.to_datetime(df["timestamp_created"])
@@ -115,6 +117,35 @@ if df_processed is not None:
 
             with st.expander("Click to view the processed data"):
                 st.dataframe(df_processed.head(100))
+
+            with st.expander("Click to view the processed positive sentiment"):
+                df_positive = df_processed[
+                    (df_processed["sentiment"] == "Positive")
+                    & (df_processed["review"].str.len() > 2500)
+                ]
+                columns_to_display = [
+                    "game",
+                    "review",
+                    "processed_review",
+                    "sentiment",
+                    "voted_up",
+                ]
+                st.dataframe(df_positive[columns_to_display].sample(100))
+
+            with st.expander("Click to view the processed negative sentiment"):
+                df_negative = df_processed[
+                    (df_processed["sentiment"] == "Negative")
+                    & (df_processed["review"].str.len() > 2500)
+                ]
+                columns_to_display = [
+                    "game",
+                    "review",
+                    "processed_review",
+                    "sentiment",
+                    "voted_up",
+                ]
+                st.dataframe(df_negative[columns_to_display].sample(100))
+
         except Exception as e:
             st.error(f"An error occurred on the Introduction page.")
             st.exception(e)

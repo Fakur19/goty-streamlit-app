@@ -21,3 +21,4 @@ __pycache__/
 *.csv
 *.parquet
 preprocessing/
+reviews_processed.parquet:Zone.Identifier
