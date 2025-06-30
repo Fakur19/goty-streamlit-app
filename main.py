@@ -3,6 +3,8 @@ import pandas as pd
 import plotly.express as px
 import os
 from sklearn.metrics import confusion_matrix, classification_report
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
 
 # Set page config
 st.set_page_config(layout="wide", page_title="Game Review Analysis Dashboard")
@@ -299,6 +301,54 @@ if df_processed is not None:
                     st.plotly_chart(fig_trend, use_container_width=True)
                 else:
                     st.warning(f"No monthly trend data available for {selected_game}.")
+
+            # --- WORD CLOUDS ---
+            st.subheader("Most Common Words in Reviews")
+            st.markdown(
+                "Word clouds showing the most frequent words in positive and negative reviews for the selected game."
+            )
+
+            def generate_wordcloud(text, title):
+                """Generates and displays a word cloud."""
+                wordcloud = WordCloud(
+                    width=800,
+                    height=400,
+                    background_color="white",
+                    colormap="viridis",
+                    max_words=150,
+                ).generate(text)
+
+                fig, ax = plt.subplots(figsize=(10, 5))
+                ax.imshow(wordcloud, interpolation="bilinear")
+                ax.axis("off")
+                st.pyplot(fig)
+
+            col1, col2 = st.columns(2)
+
+            with col1:
+                st.markdown("#### Positive Reviews")
+                positive_reviews = filtered_df[
+                    (filtered_df["sentiment"] == "Positive")
+                    & (filtered_df["processed_review"].notna())
+                ]
+                positive_text = " ".join(positive_reviews["processed_review"])
+                if positive_text:
+                    generate_wordcloud(positive_text, "Positive Reviews")
+                else:
+                    st.warning("No positive reviews to generate a word cloud.")
+
+            with col2:
+                st.markdown("#### Negative Reviews")
+                negative_reviews = filtered_df[
+                    (filtered_df["sentiment"] == "Negative")
+                    & (filtered_df["processed_review"].notna())
+                ]
+                negative_text = " ".join(negative_reviews["processed_review"])
+                if negative_text:
+                    generate_wordcloud(negative_text, "Negative Reviews")
+                else:
+                    st.warning("No negative reviews to generate a word cloud.")
+
         except Exception as e:
             st.error(f"An error occurred on the Player Sentiment Analysis page.")
             st.exception(e)
